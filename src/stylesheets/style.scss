@@ -1,0 +1,21 @@
+@import 'base/reset';
+@import 'base/normalize';
+
+@import 'components/square';
+@import 'components/board';
+@import 'components/game';
+
+
+body, html {
+    height: 100%;
+    width: 100%;
+}
+
+#app {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Open Sans', sans-serif;
+}

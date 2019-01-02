@@ -1,0 +1,15 @@
+.board {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr; 
+    grid-template-rows: 1fr 1fr 1fr 1fr;
+    grid-gap: 2vmin;
+    border: 2px solid #EEE;
+    padding: 2vmin;
+    height: 100%;
+    width: 100%;
+
+    &:focus {
+        outline: none;
+        box-shadow: 0 0 12px 6px rgba(0, 0, 0, 0.1);
+    }
+}

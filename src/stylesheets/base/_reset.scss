@@ -1,0 +1,11 @@
+/**
+ * Universal box-sizing with inheritance
+ * https://css-tricks.com/box-sizing/#article-header-id-6
+ */
+html {
+    box-sizing: border-box;
+}
+
+*, *:before, *:after {
+  box-sizing: inherit;
+}

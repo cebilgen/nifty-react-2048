@@ -1,0 +1,18 @@
+{
+    "compilerOptions": {
+        "sourceMap": true,
+        "module": "commonjs",
+        "jsx": "react",
+        "jsxFactory": "h",
+        "target": "es6",
+        "strict": true,
+        "noUnusedParameters": true,
+        "noUnusedLocals": true,
+        "noImplicitReturns": true,
+        "noFallthroughCasesInSwitch": true
+    },
+    "include": [
+        "src/*.ts",
+        "src/*.tsx"
+    ]
+}

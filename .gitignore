@@ -1,0 +1,10 @@
+# Ignore everything in the root folder
+/*
+
+# Except...
+!.gitignore
+!package.json
+!package-lock.json
+!tsconfig.json
+!webpack.config.js
+!src

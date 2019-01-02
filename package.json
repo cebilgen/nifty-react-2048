@@ -1,0 +1,24 @@
+{
+  "name": "nifty-react-2048",
+  "version": "0.0.1",
+  "description": "",
+  "main": "main.tsx",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "hammerjs": "^2.0.8",
+    "preact": "^8.4.2",
+    "ramda": "^0.26.1",
+    "ts-loader": "^5.3.3",
+    "typescript": "^3.2.2",
+    "webpack": "^4.28.3"
+  },
+  "devDependencies": {
+    "@types/hammerjs": "^2.0.36",
+    "@types/ramda": "^0.25.46",
+    "webpack-cli": "^3.2.1"
+  }
+}
