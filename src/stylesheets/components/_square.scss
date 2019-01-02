@@ -6,4 +6,9 @@
     font-weight: bold;
     align-items: center;
     justify-content: center;
+    
+    &--bg { 
+        background-color: #EEEEEE;
+        box-shadow: 0px 3px 0px 0px #EEEEEE; 
+    }
 }

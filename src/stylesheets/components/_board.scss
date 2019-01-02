@@ -1,15 +1,37 @@
-.board {
+%board-grid {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr; 
     grid-template-rows: 1fr 1fr 1fr 1fr;
     grid-gap: 2vmin;
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    padding: inherit;
+}
+
+.board {
     border: 2px solid #EEE;
     padding: 2vmin;
     height: 100%;
     width: 100%;
+    margin: 10% auto 0 auto;
+    position: relative;
 
     &:focus {
         outline: none;
         box-shadow: 0 0 12px 6px rgba(0, 0, 0, 0.1);
     }
+
+    &__background {
+        @extend %board-grid;
+        z-index: 100;
+    }
+
+    &__actual {
+        @extend %board-grid;
+        z-index: 200;
+    }
+
 }
