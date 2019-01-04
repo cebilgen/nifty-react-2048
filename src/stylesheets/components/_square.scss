@@ -7,8 +7,19 @@
     align-items: center;
     justify-content: center;
     
-    &--bg { 
-        background-color: #EEEEEE;
-        box-shadow: 0px 3px 0px 0px #EEEEEE; 
-    }
+    // Colors
+    &--bg       { background-color: #EEEEEE; box-shadow: 0px 3px 0px 0px #EEEEEE; }
+    &--val-2    { background-color: #7CB5E2; box-shadow: 0px 3px 0px 0px #5FA5D9; }
+    &--val-4    { background-color: #4495D4; box-shadow: 0px 3px 0px 0px #397FB3; }
+    &--val-8    { background-color: #2F6895; box-shadow: 0px 3px 0px 0px #255174; }
+    &--val-16   { background-color: #F5BD70; box-shadow: 0px 3px 0px 0px #F3AE4F; }
+    &--val-32   { background-color: #F2A032; box-shadow: 0px 3px 0px 0px #CD8829; }
+    &--val-64   { background-color: #CD8829; box-shadow: 0px 3px 0px 0px #A87023; }
+    &--val-128  { background-color: #E37051; box-shadow: 0px 3px 0px 0px #DE5833; }
+    &--val-256  { background-color: #DE5833; box-shadow: 0px 3px 0px 0px #BD4A2B; }
+    &--val-512  { background-color: #BD4A2B; box-shadow: 0px 3px 0px 0px #9B3D24; }
+    &--val-1024 { background-color: #5454DA; box-shadow: 0px 3px 0px 0px #4747B9; }
+    &--val-2048 { background-color: #3B3C99; box-shadow: 0px 3px 3px 0px #2E2E78; }
+    &--val-4096 { background-color: #FFD700; box-shadow: 0px 3px 3px 0px #E2BF00; } 
+    &--val-8192 { background-color: #FFD700; box-shadow: 0px 3px 3px 0px #E2BF00; }
 }
