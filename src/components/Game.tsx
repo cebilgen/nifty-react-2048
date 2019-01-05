@@ -12,6 +12,8 @@ interface GameState {
 }
 
 export default class Game extends Component<any, GameState> {
+    private history: GameState[] = []
+
     constructor(props: any) {
         super(props)
         this.newGame()
@@ -23,7 +25,17 @@ export default class Game extends Component<any, GameState> {
             score: 0,
             noChange: R.repeat(false, 4)
         })
+
+        this.history = []
     } 
+
+    undo() {
+        let lastState = this.history.pop()
+
+        if (lastState !== undefined) {
+            this.setState(lastState)
+        }
+    }
 
     onKeyDown(ev: KeyboardEvent) {
         if (ev.key === 'ArrowUp') {
@@ -39,7 +51,7 @@ export default class Game extends Component<any, GameState> {
             this.slideLeft()
         } 
         else if (ev.key === 'Backspace') {
-            // undo?
+            this.undo()
         }
     }
 
@@ -51,6 +63,8 @@ export default class Game extends Component<any, GameState> {
             noChange[Direction.Up] = true
             return this.setState({noChange: noChange})
         }
+
+        this.history.push(this.state)
 
         this.setState({
             board: BoardOps.newSquare(slid),
@@ -68,6 +82,8 @@ export default class Game extends Component<any, GameState> {
             return this.setState({noChange: noChange})
         }
 
+        this.history.push(this.state)
+
         this.setState({
             board: BoardOps.newSquare(slid),
             score: this.state.score + score,
@@ -84,6 +100,8 @@ export default class Game extends Component<any, GameState> {
             return this.setState({noChange: noChange})
         }
 
+        this.history.push(this.state)
+
         this.setState({
             board: BoardOps.newSquare(slid),
             score: this.state.score + score,
@@ -99,6 +117,8 @@ export default class Game extends Component<any, GameState> {
             noChange[Direction.Left] = true
             return this.setState({noChange: noChange})
         }
+
+        this.history.push(this.state)
 
         this.setState({
             board: BoardOps.newSquare(slid),
