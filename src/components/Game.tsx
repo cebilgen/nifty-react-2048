@@ -2,7 +2,7 @@ import {h, Component} from 'preact'
 import * as R from 'ramda'
 
 import Board from './Board'
-import { BoardOps } from '../logic'
+import { Direction, BoardOps } from '../logic'
 
 
 interface GameState {
@@ -27,20 +27,84 @@ export default class Game extends Component<any, GameState> {
 
     onKeyDown(ev: KeyboardEvent) {
         if (ev.key === 'ArrowUp') {
-            // slide up 
+            this.slideUp()
         }
         if (ev.key === 'ArrowRight') {
-            // slide right 
+            this.slideRight()
         }
         else if (ev.key === 'ArrowDown') {
-            // slide down
+            this.slideDown()
         } 
         else if (ev.key === 'ArrowLeft') {
-            // slide left 
+            this.slideLeft()
         } 
         else if (ev.key === 'Backspace') {
             // undo?
         }
+    }
+
+    slideUp() {
+        const [slid, score] = BoardOps.slideUp(this.state.board)
+
+        if (R.equals(slid, this.state.board)) { 
+            const noChange = this.state.noChange.slice()
+            noChange[Direction.Up] = true
+            return this.setState({noChange: noChange})
+        }
+
+        this.setState({
+            board: BoardOps.newSquare(slid),
+            score: this.state.score + score,
+            noChange: R.repeat(false, 4),
+        })
+    }
+
+    slideRight() {
+        const [slid, score] = BoardOps.slideRight(this.state.board)
+
+        if (R.equals(slid, this.state.board)) { 
+            const noChange = this.state.noChange.slice()
+            noChange[Direction.Right] = true
+            return this.setState({noChange: noChange})
+        }
+
+        this.setState({
+            board: BoardOps.newSquare(slid),
+            score: this.state.score + score,
+            noChange: R.repeat(false, 4),
+        })
+    }
+
+    slideDown() {
+        const [slid, score] = BoardOps.slideDown(this.state.board)
+
+        if (R.equals(slid, this.state.board)) { 
+            const noChange = this.state.noChange.slice()
+            noChange[Direction.Down] = true
+            return this.setState({noChange: noChange})
+        }
+
+        this.setState({
+            board: BoardOps.newSquare(slid),
+            score: this.state.score + score,
+            noChange: R.repeat(false, 4),
+        })
+    }
+
+    slideLeft() {
+        const [slid, score] = BoardOps.slideLeft(this.state.board)
+
+        if (R.equals(slid, this.state.board)) { 
+            const noChange = this.state.noChange.slice()
+            noChange[Direction.Left] = true
+            return this.setState({noChange: noChange})
+        }
+
+        this.setState({
+            board: BoardOps.newSquare(slid),
+            score: this.state.score + score,
+            noChange: R.repeat(false, 4),
+        })
     }
 
     render(): JSX.Element {

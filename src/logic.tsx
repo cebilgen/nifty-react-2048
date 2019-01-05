@@ -3,6 +3,9 @@ import * as R from 'ramda'
 import {randomInt} from './utils'
 
 
+export const enum Direction { Up, Right, Down, Left }
+
+
 /**
  * Namespace of board operations used within the game logic.
  * A board is simply a 4x4 matrix.
