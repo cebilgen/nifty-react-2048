@@ -2,6 +2,7 @@ import {h, Component} from 'preact'
 import * as R from 'ramda'
 
 import Board from './Board'
+import Controls from './Controls'
 import { Direction, BoardOps } from '../logic'
 
 
@@ -133,6 +134,10 @@ export default class Game extends Component<any, GameState> {
                 <Board
                     onKeyDown={(ev: KeyboardEvent) => this.onKeyDown(ev)}
                     values={this.state.board}
+                />
+                <Controls
+                    onClickUndo={() => this.undo()}
+                    onClickNewGame={() => this.newGame()}
                 />
             </div>
         )

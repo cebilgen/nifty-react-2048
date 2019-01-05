@@ -1,0 +1,34 @@
+.controls {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 10%;
+
+    & > *:not(:first-child) {
+        margin-left: 2%;
+    }
+
+    &__undo, &__new-game {
+        background-color: #4495D4; 
+        border: none;
+        border-radius: 6px;
+        color: #EEE; 
+        box-shadow: 0px 6px 0px 0px #397FB3;
+        outline: none;
+        height: 60%;
+        font-size: 4vmin;
+        padding: 1vmin 2vmin;
+    }
+
+    &__undo:hover, &__new-game:hover {
+        cursor: pointer;
+        box-shadow: 0px 6px 3px 0px #397FB3;
+        text-shadow: 0px 0px 2px #EEE;
+    }
+
+    &__undo:active, &__new-game:active {
+        transform: translateY(3px);
+        box-shadow: 0px 3px 3px 0px #2F6895;
+    }
+}
