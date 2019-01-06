@@ -39,6 +39,14 @@ export default class Game extends Component<any, GameState> {
         }
     }
 
+    isFinished(): boolean {
+        return R.all(R.equals(true))(this.state.noChange)
+    }
+
+    isWon(): boolean {
+        return BoardOps.checkWin(this.state.board)
+    }
+
     onKeyDown(ev: KeyboardEvent) {
         if (ev.key === 'ArrowUp') {
             this.slideUp()
