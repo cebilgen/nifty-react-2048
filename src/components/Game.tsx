@@ -1,6 +1,7 @@
 import {h, Component} from 'preact'
 import * as R from 'ramda'
 
+import Info from './Info'
 import Board from './Board'
 import Controls from './Controls'
 import { Direction, BoardOps } from '../logic'
@@ -131,6 +132,9 @@ export default class Game extends Component<any, GameState> {
     render(): JSX.Element {
         return (
             <div class="game">
+                <Info
+                    score={this.state.score}
+                />
                 <Board
                     onKeyDown={(ev: KeyboardEvent) => this.onKeyDown(ev)}
                     values={this.state.board}
