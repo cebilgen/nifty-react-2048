@@ -5,11 +5,14 @@ import Info from './Info'
 import Board from './Board'
 import Controls from './Controls'
 import { Direction, BoardOps } from '../logic'
+import { delay } from '../utils'
 
 
 interface GameState {
     board: number[]
     score: number
+    shift?: number[]
+    shiftDirection?: string 
     noChange: boolean[] 
 }
 
@@ -25,6 +28,8 @@ export default class Game extends Component<any, GameState> {
         this.setState({
             board: BoardOps.newSquare(R.repeat(0, 16)),
             score: 0,
+            shift: undefined,
+            shiftDirection: undefined,
             noChange: R.repeat(false, 4)
         })
 
@@ -65,8 +70,8 @@ export default class Game extends Component<any, GameState> {
         }
     }
 
-    slideUp() {
-        const [slid, score] = BoardOps.slideUp(this.state.board)
+    async slideUp() {
+        const [slid, shift, score] = BoardOps.slideUp(this.state.board)
 
         if (R.equals(slid, this.state.board)) { 
             const noChange = this.state.noChange.slice()
@@ -74,6 +79,8 @@ export default class Game extends Component<any, GameState> {
             return this.setState({noChange: noChange})
         }
 
+        await this.shift(shift, 'up')
+
         this.history.push(this.state)
 
         this.setState({
@@ -83,8 +90,8 @@ export default class Game extends Component<any, GameState> {
         })
     }
 
-    slideRight() {
-        const [slid, score] = BoardOps.slideRight(this.state.board)
+    async slideRight() {
+        const [slid, shift, score] = BoardOps.slideRight(this.state.board)
 
         if (R.equals(slid, this.state.board)) { 
             const noChange = this.state.noChange.slice()
@@ -92,6 +99,8 @@ export default class Game extends Component<any, GameState> {
             return this.setState({noChange: noChange})
         }
 
+        await this.shift(shift, 'right')
+
         this.history.push(this.state)
 
         this.setState({
@@ -101,8 +110,8 @@ export default class Game extends Component<any, GameState> {
         })
     }
 
-    slideDown() {
-        const [slid, score] = BoardOps.slideDown(this.state.board)
+    async slideDown() {
+        const [slid, shift, score] = BoardOps.slideDown(this.state.board)
 
         if (R.equals(slid, this.state.board)) { 
             const noChange = this.state.noChange.slice()
@@ -110,6 +119,8 @@ export default class Game extends Component<any, GameState> {
             return this.setState({noChange: noChange})
         }
 
+        await this.shift(shift, 'down')
+
         this.history.push(this.state)
 
         this.setState({
@@ -119,8 +130,8 @@ export default class Game extends Component<any, GameState> {
         })
     }
 
-    slideLeft() {
-        const [slid, score] = BoardOps.slideLeft(this.state.board)
+    async slideLeft() {
+        const [slid, shift, score] = BoardOps.slideLeft(this.state.board)
 
         if (R.equals(slid, this.state.board)) { 
             const noChange = this.state.noChange.slice()
@@ -128,12 +139,31 @@ export default class Game extends Component<any, GameState> {
             return this.setState({noChange: noChange})
         }
 
+        await this.shift(shift, 'left')
+
         this.history.push(this.state)
 
         this.setState({
             board: BoardOps.newSquare(slid),
             score: this.state.score + score,
             noChange: R.repeat(false, 4),
+        })
+    }
+
+    async shift(shift: number[], direction: string): Promise<void> {
+        // Start slide animation
+        this.setState({
+            shift: shift,
+            shiftDirection: direction,
+        })
+
+        // Wait for the animation to complete
+        await delay(100)
+
+        // Reset animation
+        this.setState({
+            shift: undefined,
+            shiftDirection: undefined,
         })
     }
 
@@ -146,6 +176,8 @@ export default class Game extends Component<any, GameState> {
                 <Board
                     onKeyDown={(ev: KeyboardEvent) => this.onKeyDown(ev)}
                     values={this.state.board}
+                    shift={this.state.shift}
+                    shiftDirection={this.state.shiftDirection}
                 />
                 <Controls
                     onClickUndo={() => this.undo()}

@@ -68,8 +68,9 @@ export namespace BoardOps {
         return rotated
     }
 
-    export function slideRowRight(row: number[]): [number[], number] {
+    export function slideRowRight(row: number[]): [number[], number[], number] {
         row = row.slice()
+        let shift = [0, 0, 0, 0]
         let score = 0
 
         for (let i = 3; i > 0; i--) {
@@ -80,6 +81,7 @@ export namespace BoardOps {
             if (row[i] === 0) {
                 for (let j = (i-1); j >= 0; j--) {
                     if (row[j] !== 0) {
+                        shift[j] = i - j
                         row[i] = row[j]
                         row[j] = 0
                         break
@@ -93,6 +95,7 @@ export namespace BoardOps {
                         continue
                     }
                     else if (row[j] === row[i]) {
+                        shift[j] = i - j
                         score += row[i]
                         row[i] += row[j]
                         row[j] = 0 
@@ -105,11 +108,12 @@ export namespace BoardOps {
             }
         }
 
-        return [row, score]
+        return [row, shift, score]
     }
 
-    export function slideRowLeft(row: number[]): [number[], number] {
+    export function slideRowLeft(row: number[]): [number[], number[], number] {
         row = row.slice()
+        let shift = [0, 0, 0, 0]
         let score = 0
 
         for (let i = 0; i < 3; i++) {
@@ -120,6 +124,7 @@ export namespace BoardOps {
             if (row[i] === 0) {
                 for (let j = (i+1); j <= 3; j++) {
                     if (row[j] !== 0) {
+                        shift[j] = j - i 
                         row[i] = row[j]
                         row[j] = 0
                         break
@@ -131,6 +136,7 @@ export namespace BoardOps {
                     if (row[j] === 0) {
                         continue
                     } else if (row[j] === row[i]) {
+                        shift[j] = j - i 
                         score += row[i]
                         row[i] += row[j]
                         row[j] = 0 
@@ -142,66 +148,74 @@ export namespace BoardOps {
             }
         }
 
-        return [row, score]
+        return [row, shift, score]
     }
 
 
-    export function slideRight(matrix: number[]): [number[], number] {
+    export function slideRight(matrix: number[]): [number[], number[], number] {
         const m: number[] = []
+        const shift: number[] = []
         let score: number = 0
 
         for (const row of getRows(matrix)) {
-            const [rowSlid, rowScore] = slideRowRight(row)
+            const [rowSlid, rowShift, rowScore] = slideRowRight(row)
 
             m.push(...rowSlid)
+            shift.push(...rowShift)
             score += rowScore 
         }
 
-        return [m, score] 
+        return [m, shift, score] 
     }
 
-    export function slideUp(matrix: number[]): [number[], number] {
+    export function slideUp(matrix: number[]): [number[], number[], number] {
         const m: number[] = []
+        const shift: number[] = []
         let score: number = 0
 
         // Rotate right -> slide rows right -> rotate left
         for (const row of getRows(rotateRight(matrix))) {
-            const [rowSlid, rowScore] = slideRowRight(row)
+            const [rowSlid, rowShift, rowScore] = slideRowRight(row)
 
             m.push(...rowSlid)
+            shift.push(...rowShift)
             score += rowScore 
         }
 
-        return [rotateLeft(m), score] 
+        return [rotateLeft(m), rotateLeft(shift), score] 
     }
 
-    export function slideLeft(matrix: number[]): [number[], number] {
+    export function slideLeft(matrix: number[]): [number[], number[], number] {
         let m: number[] = []
         let score: number = 0
+        let shift: number[] = []
 
         for (const row of getRows(matrix)) {
-            const [rowSlid, rowScore] = slideRowLeft(row)
+            const [rowSlid, rowShift, rowScore] = slideRowLeft(row)
 
             m.push(...rowSlid)
+            shift.push(...rowShift)
             score += rowScore 
         }
 
-        return [m, score] 
+        return [m, shift, score] 
     }
 
-    export function slideDown(matrix: number[]): [number[], number] {
+    export function slideDown(matrix: number[]): [number[], number[], number] {
         const m: number[] = []
+        const shift: number[] = []
         let score: number = 0
 
         // Rotate right -> slide rows left -> rotate left
         for (const row of getRows(rotateRight(matrix))) {
-            const [rowSlid, rowScore] = slideRowLeft(row)
+            const [rowSlid, rowShift, rowScore] = slideRowLeft(row)
 
             m.push(...rowSlid)
+            shift.push(...rowShift)
             score += rowScore 
         }
 
-        return [rotateLeft(m), score] 
+        return [rotateLeft(m), rotateLeft(shift), score] 
     }
 
     export function checkWin(matrix: number[]): boolean {

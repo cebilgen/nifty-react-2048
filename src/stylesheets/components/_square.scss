@@ -22,4 +22,18 @@
     &--val-2048 { background-color: #3B3C99; box-shadow: 0px 3px 3px 0px #2E2E78; }
     &--val-4096 { background-color: #FFD700; box-shadow: 0px 3px 3px 0px #E2BF00; } 
     &--val-8192 { background-color: #FFD700; box-shadow: 0px 3px 3px 0px #E2BF00; }
+
+    /* Animations */
+    &--move-right-1 { transition: transform 0.1s ease-in-out; transform: translateX(19.4vmin) }
+    &--move-right-2 { transition: transform 0.1s ease-in-out; transform: translateX(38.8vmin) }
+    &--move-right-3 { transition: transform 0.1s ease-in-out; transform: translateX(58.2vmin) }
+    &--move-up-1    { transition: transform 0.1s ease-in-out; transform: translateY(-19.4vmin) }
+    &--move-up-2    { transition: transform 0.1s ease-in-out; transform: translateY(-38.8vmin) }
+    &--move-up-3    { transition: transform 0.1s ease-in-out; transform: translateY(-58.2vmin) }
+    &--move-left-1  { transition: transform 0.1s ease-in-out; transform: translateX(-19.4vmin) }
+    &--move-left-2  { transition: transform 0.1s ease-in-out; transform: translateX(-38.8vmin) }
+    &--move-left-3  { transition: transform 0.1s ease-in-out; transform: translateX(-58.2vmin) }
+    &--move-down-1  { transition: transform 0.1s ease-in-out; transform: translateY(19.4vmin) }
+    &--move-down-2  { transition: transform 0.1s ease-in-out; transform: translateY(38.8vmin) }
+    &--move-down-3  { transition: transform 0.1s ease-in-out; transform: translateY(58.2vmin) }
 }

@@ -6,6 +6,8 @@ import Square from './Square';
 interface BoardProps {
     onKeyDown: (ev: KeyboardEvent) => void
     values: number[] 
+    shift?: number[]
+    shiftDirection?: string
 }
 
 export default function Board(props: BoardProps): JSX.Element {
@@ -18,6 +20,8 @@ export default function Board(props: BoardProps): JSX.Element {
                 {R.times((n) => 
                     <Square     
                         value={props.values[n]}
+                        shift={props.shift !== undefined ? props.shift[n] : undefined}
+                        shiftDirection={props.shiftDirection}
                     />, 16
                 )}
             </div>
