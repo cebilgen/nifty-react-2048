@@ -172,6 +172,8 @@ export default class Game extends Component<any, GameState> {
             <div class="game">
                 <Info
                     score={this.state.score}
+                    isWon={this.isWon()}
+                    isFinished={this.isFinished()}
                 />
                 <Board
                     onKeyDown={(ev: KeyboardEvent) => this.onKeyDown(ev)}
