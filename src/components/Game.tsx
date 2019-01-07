@@ -56,7 +56,7 @@ export default class Game extends Component<any, GameState> {
         if (ev.key === 'ArrowUp') {
             this.slideUp()
         }
-        if (ev.key === 'ArrowRight') {
+        else if (ev.key === 'ArrowRight') {
             this.slideRight()
         }
         else if (ev.key === 'ArrowDown') {
