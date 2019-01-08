@@ -1,5 +1,6 @@
 import {h, Component} from 'preact'
 import * as R from 'ramda'
+import * as Hammer from 'hammerjs'
 
 import Info from './Info'
 import Board from './Board'
@@ -14,14 +15,26 @@ interface GameState {
     shift?: number[]
     shiftDirection?: string 
     noChange: boolean[] 
+    continue?: boolean
 }
 
 export default class Game extends Component<any, GameState> {
     private history: GameState[] = []
+    private hammer?: HammerManager
 
     constructor(props: any) {
         super(props)
         this.newGame()
+    }
+
+    componentDidMount() {
+        this.setupTouchControls()
+    }
+
+    componentDidUpdate() {
+        if (this.isWon() && this.state.continue === undefined && this.hammer !== undefined) {
+            this.hammer.get('swipe').set({enable: false})
+        }
     }
 
     newGame() {
@@ -30,6 +43,7 @@ export default class Game extends Component<any, GameState> {
             score: 0,
             shift: undefined,
             shiftDirection: undefined,
+            continue: undefined,
             noChange: R.repeat(false, 4)
         })
 
@@ -53,7 +67,10 @@ export default class Game extends Component<any, GameState> {
     }
 
     onKeyDown(ev: KeyboardEvent) {
-        if (ev.key === 'ArrowUp') {
+        if (this.isWon() && this.state.continue === undefined) {
+            return
+        }
+        else if (ev.key === 'ArrowUp') {
             this.slideUp()
         }
         else if (ev.key === 'ArrowRight') {
@@ -68,6 +85,28 @@ export default class Game extends Component<any, GameState> {
         else if (ev.key === 'Backspace') {
             this.undo()
         }
+    }
+
+    setupTouchControls() {
+        let eGameBoard = document.querySelector('.board') 
+        if (eGameBoard === null) {
+            return console.log('Touch query selector failed.')
+        }
+
+        this.hammer = new Hammer.Manager(eGameBoard)
+        this.hammer.add(new Hammer.Swipe())
+        this.hammer.add(new Hammer.Tap())
+
+        this.hammer.on('swiperight', () => this.slideRight())
+        this.hammer.on('swipeup',    () => this.slideUp())
+        this.hammer.on('swipeleft',  () => this.slideLeft())
+        this.hammer.on('swipedown',  () => this.slideDown())
+        this.hammer.on('tap', () => {
+            if (this.isWon() && this.state.continue === undefined && this.hammer !== undefined) {
+                this.setState({continue: true})
+                this.hammer.get('swipe').set({enable: true})
+            }
+        })
     }
 
     async slideUp() {
@@ -174,6 +213,7 @@ export default class Game extends Component<any, GameState> {
                     score={this.state.score}
                     isWon={this.isWon()}
                     isFinished={this.isFinished()}
+                    continue={this.state.continue}
                 />
                 <Board
                     onKeyDown={(ev: KeyboardEvent) => this.onKeyDown(ev)}
